@@ -35,6 +35,7 @@ class RuntimeImportBlocker(importlib.abc.MetaPathFinder):
             'nanobot.agent.tools.image_generation_config',
             'nanobot.agent.tools.self_config',
             'nanobot.agent.tools.shell_config',
+            'nanobot.agent.tools.speech_config',
             'nanobot.agent.tools.web_config',
         }
         if fullname in config_modules:

@@ -368,9 +368,9 @@ If nanobot worked for you, a star on GitHub is the simplest way to support the p
 
 Deploy nanobot's gateway and bundled WebUI from the repository's ready-to-use Blueprint:
 
-[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/HKUDS/nanobot)
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/Drillside/nanobot)
 
-Render will ask for `ANTHROPIC_API_KEY` and a private `NANOBOT_WEB_TOKEN`, then provision persistent storage for sessions, memory, and WebUI history. Persistent disks require a paid Render service.
+This fork uses a **Free** web service with Codex subscription sign-in, spoken replies and encrypted external checkpoints instead of a paid disk. Follow the [Render Free setup guide](./docs/render-free.md). It needs your own free Upstash database; incoming voice transcription is configured separately. No Anthropic API key is required by this deployment profile.
 
 **Self-host**
 

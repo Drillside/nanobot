@@ -29,6 +29,10 @@ EOF
     exit 1
 fi
 
+if [ "$RENDER" = "true" ] && [ "$NANOBOT_RENDER_FREE" = "1" ] && [ "$NANOBOT_RENDER_FREE_CHILD" != "1" ]; then
+    exec python /app/deploy/render_free.py
+fi
+
 # Render keeps environment references in its deployment template. Local
 # Compose generates and validates its initial config through Python instead.
 if [ "$RENDER" = "true" ]; then

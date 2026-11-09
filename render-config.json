@@ -1,15 +1,12 @@
 {
   "agents": {
     "defaults": {
-      "model": "anthropic/claude-opus-4-8",
-      "provider": "auto"
+      "model": "openai-codex/gpt-6.1-sol",
+      "provider": "openai_codex",
+      "fallbackModels": []
     }
   },
-  "providers": {
-    "anthropic": {
-      "apiKey": "${ANTHROPIC_API_KEY}"
-    }
-  },
+  "providers": {},
   "gateway": {
     "host": "127.0.0.1",
     "port": 18790
@@ -17,13 +14,28 @@
   "channels": {
     "websocket": {
       "enabled": true,
-      "host": "0.0.0.0",
-      "port": 8765,
+      "host": "127.0.0.1",
+      "port": 8766,
       "tokenIssueSecret": "${NANOBOT_WEB_TOKEN}",
       "websocketRequiresToken": true
+    },
+    "telegram": {
+      "enabled": false,
+      "allowFrom": [],
+      "richMessages": true,
+      "streaming": true
     }
   },
   "tools": {
+    "speech": {
+      "enabled": true,
+      "voice": "en-US-AriaNeural"
+    },
+    "imageGeneration": {
+      "enabled": true,
+      "provider": "openai_codex",
+      "model": "gpt-image-2"
+    },
     "restrictToWorkspace": true,
     "webuiAllowRemotePackageInstall": false,
     "my": {

@@ -23,8 +23,10 @@ def _initialize(path: Path, web_token: str = "", api_key: str = "") -> subproces
 def test_render_blueprint_starts_gateway_through_entrypoint():
     blueprint_path = Path(__file__).resolve().parents[1] / "render.yaml"
     blueprint = yaml.safe_load(blueprint_path.read_text(encoding="utf-8"))
-    service = next(service for service in blueprint["services"] if service["name"] == "nanobot")
+    service = next(service for service in blueprint["services"] if service["name"] == "nanobot-telegram")
     assert shlex.split(service["dockerCommand"]) == ["/usr/local/bin/entrypoint.sh", "gateway"]
+    assert service["plan"] == "free"
+    assert "disk" not in service
 
 
 def test_first_boot_generates_valid_container_config(tmp_path):

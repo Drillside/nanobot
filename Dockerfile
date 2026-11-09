@@ -12,7 +12,7 @@ RUN mkdir -p /app/nanobot/web && npm run build
 FROM ghcr.io/astral-sh/uv:python3.12-bookworm-slim
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends ca-certificates curl git bubblewrap openssh-client libmagic1 && \
+    apt-get install -y --no-install-recommends ca-certificates curl git bubblewrap openssh-client libmagic1 ffmpeg && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
@@ -23,7 +23,7 @@ ENV VIRTUAL_ENV=/app/.venv
 ENV PATH="/app/.venv/bin:$PATH"
 RUN uv venv --seed "$VIRTUAL_ENV"
 
-ARG NANOBOT_EXTRAS=
+ARG NANOBOT_EXTRAS=speech
 COPY pyproject.toml ./
 RUN set -- && \
     for extra in $(printf '%s' "$NANOBOT_EXTRAS" | tr ',' ' '); do \
@@ -38,7 +38,7 @@ COPY scripts/install_channel_dependencies.py scripts/
 COPY --from=webui-builder /app/nanobot/web/dist/ nanobot/web/dist/
 RUN NANOBOT_SKIP_WEBUI_BUILD=1 uv pip install --python "$VIRTUAL_ENV/bin/python" --no-cache --no-deps .
 
-ARG NANOBOT_CHANNELS=whatsapp
+ARG NANOBOT_CHANNELS=telegram
 RUN for channel in $(printf '%s' "$NANOBOT_CHANNELS" | tr ',' ' '); do \
         python -m scripts.install_channel_dependencies "$channel"; \
     done
@@ -48,6 +48,7 @@ RUN for channel in $(printf '%s' "$NANOBOT_CHANNELS" | tr ',' ' '); do \
 # at startup). Lives in the code dir (/app), not the data dir, so a mounted disk
 # won't shadow it. Only used when RENDER=true; ignored by local runs.
 COPY render-config.json ./
+COPY deploy/render_free.py /app/deploy/render_free.py
 
 RUN useradd -m -u 1000 -s /bin/bash nanobot && \
     mkdir -p /home/nanobot/.nanobot && \

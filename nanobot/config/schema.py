@@ -12,6 +12,7 @@ from nanobot.agent.tools.filesystem_config import FileToolsConfig
 from nanobot.agent.tools.image_generation_config import ImageGenerationToolConfig
 from nanobot.agent.tools.self_config import MyToolConfig
 from nanobot.agent.tools.shell_config import ExecToolConfig
+from nanobot.agent.tools.speech_config import SpeechToolConfig
 from nanobot.agent.tools.web_config import (
     WebFetchConfig as WebFetchConfig,
 )
@@ -436,6 +437,7 @@ class ToolsConfig(Base):
     image_generation: ImageGenerationToolConfig = Field(
         default_factory=ImageGenerationToolConfig,
     )
+    speech: SpeechToolConfig = Field(default_factory=SpeechToolConfig)
     max_session_messages_per_minute: int = Field(default=6, ge=1)
     restrict_to_workspace: bool = False  # policy intent: keep tool access inside workspace when possible
     webui_allow_local_service_access: bool = Field(
